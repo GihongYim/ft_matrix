@@ -27,3 +27,14 @@ class Vector:
             raise TypeError
         for i in range(self.size):
             self.v[i] *= a
+    
+    def dot(self, v : 'Vector'):
+        if self.size != v.size:
+            raise ValueError("dot produce : vectors size not equal")
+        
+        value = 0.0
+        for i in range(v.size):
+            value += (self.v[i] * v.v[i])
+        return value
+
+
