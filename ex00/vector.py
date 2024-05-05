@@ -4,7 +4,10 @@ class Vector:
         self.size = len(v)
 
     def __str__(self):
-        return str(self.v)
+        result = ""
+        for i in range(self.size):
+            result += "[" + str(self.v[i]) + "]\n"
+        return result
             
 
     def add(self, v: 'Vector') -> None:
