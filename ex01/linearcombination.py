@@ -9,8 +9,6 @@ def linear_combination(v:list['Vector'], coefs:list[float]):
         raise "v, coefs have not equal size"
     result = Vector([0] * v[0].size)
 
-    for i in range(len(v)):
-        result.add(v[i].scl(coefs[i]))
     return result
 
 
