@@ -36,5 +36,24 @@ class Vector:
         for i in range(v.size):
             value += (self.v[i] * v.v[i])
         return value
+    
+    def norm_1(self):
+        norm = 0.0
+        for i in range(self.size):
+            norm += abs(self.v[i])
+        return norm
+    
+    def norm(self):
+        norm = 0.0
+        for i in range(self.size):
+            norm += self.v[i] ** 2
+        return norm ** (0.5)
+    
+    def norm_inf(self):
+        norm = 0.0
+        for i in range(self.size):
+            if abs(self.v[i]) > norm:
+                norm = abs(self.v[i])
+        return norm
 
-
+        
