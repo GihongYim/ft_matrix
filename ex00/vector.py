@@ -2,11 +2,14 @@ class Vector:
     def __init__(self, v: list[float]):
         self.vector = v
         self.size = len(v)
+        self.dim = (len(v))
 
     def __str__(self):
         result = ""
         for i in range(self.size):
-            result += "[" + str(self.vector[i]) + "]\n"
+            result += "[" + str(self.vector[i]) + "]"
+            if i != self.size - 1:
+                result += "\n"
         return result
             
 
