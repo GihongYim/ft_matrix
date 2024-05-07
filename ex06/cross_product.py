@@ -17,3 +17,15 @@ def cross_product(u: 'Vector', v: 'Vector') -> 'Vector':
     except Exception as e:
         print(e)
         exit(1)
+
+    w = Vector([0.0, 0.0, 0.0])
+
+    w.vector[0] = u.vector[1] * v.vector[2] - u.vector[2] * v.vector[1]
+    w.vector[1] = -u.vector[0] * v.vector[2] + u.vector[2] * v.vector[0]
+    w.vector[2] = u.vector[0] * v.vector[1] - u.vector[1] * v.vector[0]
+    return w
+
+if __name__ == "__main__":
+    u = Vector([0.0, 0.0, 1.0])
+    v = Vector([1.0, 0.0, 0.0])
+    print(cross_product(u, v))
