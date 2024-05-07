@@ -12,18 +12,19 @@ class Matrix:
             exit(1)
         self.matrix = b
 
-        self.row = len(b)
-        self.col = len(b[0])
+        # self.row = len(b)
+        # self.col = len(b[0])
         self.dim = (len(b), len(b[0]))
 
         for i in range(len(b)):
-            if len(b[i]) != self.col:
+            if len(b[i]) != self.dim[1]:
                 raise "each col has different size"
     def __str__(self):
         result = ""
-        for i in range(self.col):
+        for i in range(self.dim[0]):
             result += str(self.matrix[i])
-            # result += "\n"
+            if i != self.dim[1] - 1:
+                result += "\n"
         return str(result)
         
 
@@ -31,21 +32,21 @@ class Matrix:
         if self.row != v.row or self.col != v.row:
             raise "matrix size are not equal"
         
-        for i in range(self.row):
-            for j in range(self.col):
+        for i in range(self.dim[0]):
+            for j in range(self.dim[1]):
                 self.matrix[i][j] += v.matrix[i][j]
 
     def sub(self, v):
         if self.row != v.row or self.col != v.row:
             raise "matrix size are not equal"
         
-        for i in range(self.row):
-            for j in range(self.col):
+        for i in range(self.dim[0]):
+            for j in range(self.dim[1]):
                 self.matrix[i][j] -= v.matrix[i][j]
 
     def scl(self, a: float):
-        for i in range(self.row):
-            for j in range(self.col):
+        for i in range(self.dim[0]):
+            for j in range(self.dim[1]):
                 self.matrix[i][j] *= a
 
     def mul_vec(self, vec:'Vector'):
@@ -77,11 +78,11 @@ class Matrix:
         except Exception as e:
             print(e)
             exit(1)
-        mul = Matrix(self.matrix)
+        mul = Matrix([[0.0] * mat.dim[1]] * self.dim[0])
+    
         for i in range(self.dim[0]):
             for j in range(mat.dim[1]):
-                mul[i][j] = 0
                 for k in range(self.dim[1]):
-                    mul[i][j] += (self.matrix[i][k] + mat.matrix[k][j])
+                    mul.matrix[i][j] = mul.matrix[i][j] + (self.matrix[i][k] * mat.matrix[k][j])
         return mul
 
