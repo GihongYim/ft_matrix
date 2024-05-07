@@ -8,3 +8,25 @@ if __name__ == "__main__":
     u = Matrix([[1.0, 0.0], [0.0, 1.0]])
     v = Vector([4.0, 2.0])
     print(u.mul_vec(v))
+    print()
+    u = Matrix([[2.0, 0.0], [0.0, 2.0]])
+    v = Vector([4.0, 2.0])
+    print(u.mul_vec(v))
+    print()
+
+    u = Matrix([[2.0, -2.0], [-2.0, 2.0]])
+    v = Vector([4.0, 2.0])
+    print(u.mul_vec(v))
+    print()
+
+    u = Matrix([
+        [1.0, 0.0],
+        [0.0, 1.0]
+    ])
+
+    v = Matrix([
+        [1.0, 0.0],
+        [0.0, 1.0]
+    ])
+
+    print(u.mul_mat(v))
