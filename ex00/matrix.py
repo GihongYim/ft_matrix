@@ -78,11 +78,10 @@ class Matrix:
         except Exception as e:
             print(e)
             exit(1)
-        mul = Matrix([[0.0] * mat.dim[1]] * self.dim[0])
-    
+        mul = Matrix([[0.0] * mat.dim[1] for _ in range(self.dim[0])])
         for i in range(self.dim[0]):
             for j in range(mat.dim[1]):
                 for k in range(self.dim[1]):
-                    mul.matrix[i][j] = mul.matrix[i][j] + (self.matrix[i][k] * mat.matrix[k][j])
+                    mul.matrix[i][j] += (self.matrix[i][k] * mat.matrix[k][j])
         return mul
 
