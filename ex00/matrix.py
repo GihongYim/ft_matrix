@@ -16,6 +16,16 @@ class Matrix:
         for i in range(len(b)):
             if len(b[i]) != self.dim[1]:
                 raise "each col has different size"
+
+    def __getitem__(self, index):
+        try:
+            if index >= self.dim[0]:
+                raise IndexError("row index more than matrix row length")
+            return self.matrix[index]
+        except Exception as e:
+            print(e)
+            exit(1)
+
     @staticmethod
     def zeros(n: int, m: int) -> 'Matrix':
         try:
@@ -112,6 +122,18 @@ class Matrix:
             for col in range(self.dim[1]):
                 tr.matrix[col][row] = self.matrix[row][col]
         return tr
-    
+
     def row_echelon(self) -> 'Matrix':
-        
+        row = 0
+        col = 0
+        ref = Matrix(self.matrix)
+        while row < ref.dim[0] and col < ref.dim[1]:
+            while col < ref.dim[1] and ref.matrix[row][col] == 0.0:
+                col += 1
+            for i in range(ref.dim[0]):
+                if i == row : continue
+                if ref.matrix[i][col] == 0: continue
+                ref.matrix[i] -= (ref.matrix[row] * (ref.matrix[i][col] / ref.matrix[row][col]))
+            row += 1
+        return ref
+                
