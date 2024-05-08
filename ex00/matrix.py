@@ -11,9 +11,6 @@ class Matrix:
             print(e)
             exit(1)
         self.matrix = b
-
-        # self.row = len(b)
-        # self.col = len(b[0])
         self.dim = (len(b), len(b[0]))
 
         for i in range(len(b)):
@@ -84,4 +81,16 @@ class Matrix:
                 for k in range(self.dim[1]):
                     mul.matrix[i][j] += (self.matrix[i][k] * mat.matrix[k][j])
         return mul
+    
+    def trace(self):
+        try:
+            if self.dim[0] != self.dim[1]:
+                raise ValueError("trace : matrix is not square matrix")
+        except Exception as e:
+            print(e)
+            exit(1)
 
+        result = 0.0
+        for i in range(self.dim[0]):
+            result += self.matrix[i][i]
+        return result
