@@ -124,16 +124,18 @@ class Matrix:
         return tr
 
     def row_echelon(self) -> 'Matrix':
-        row = 0
-        col = 0
         ref = Matrix(self.matrix)
-        while row < ref.dim[0] and col < ref.dim[1]:
-            while col < ref.dim[1] and ref.matrix[row][col] == 0.0:
+        for row in range(ref.dim[0]):
+            col = 0
+            while (col < ref.dim[1]):
+                if ref.matrix[row][col] != 0:
+                    break
                 col += 1
-            for i in range(ref.dim[0]):
-                if i == row : continue
-                if ref.matrix[i][col] == 0: continue
-                ref.matrix[i] -= (ref.matrix[row] * (ref.matrix[i][col] / ref.matrix[row][col]))
-            row += 1
+            if col == ref.dim[1]:
+                continue
+            for i in range(col, ref.dim[1]):
+                ref.matrix[row][i] /= ref.matrix[row][col]
+
         return ref
+
                 
