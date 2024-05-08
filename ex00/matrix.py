@@ -112,3 +112,6 @@ class Matrix:
             for col in range(self.dim[1]):
                 tr.matrix[col][row] = self.matrix[row][col]
         return tr
+    
+    def row_echelon(self) -> 'Matrix':
+        
