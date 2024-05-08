@@ -128,13 +128,16 @@ class Matrix:
         for row in range(ref.dim[0]):
             col = 0
             while (col < ref.dim[1]):
-                if ref.matrix[row][col] != 0:
+                if ref.matrix[row][col] != 0.0:
                     break
                 col += 1
             if col == ref.dim[1]:
                 continue
+            divisor = ref.matrix[row][col]
             for i in range(col, ref.dim[1]):
-                ref.matrix[row][i] /= ref.matrix[row][col]
+                ref.matrix[row][i] /= divisor
+            for i in range(row, ref.dim[0]):
+                
 
         return ref
 
