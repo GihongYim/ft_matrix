@@ -16,11 +16,22 @@ class Matrix:
         for i in range(len(b)):
             if len(b[i]) != self.dim[1]:
                 raise "each col has different size"
+    @staticmethod
+    def zeros(n: int, m: int) -> 'Matrix':
+        try:
+            if n <= 0 or m <= 0:
+                raise ValueError("dim number should be positive integer")
+        except Exception as e:
+            print(e)
+            exit(1)
+        return Matrix([[0.0 for _ in range(m)] for _ in range(n)])
+        
+
     def __str__(self):
         result = ""
         for i in range(self.dim[0]):
             result += str(self.matrix[i])
-            if i != self.dim[1] - 1:
+            if i != self.dim[0] - 1:
                 result += "\n"
         return str(result)
         
@@ -64,7 +75,7 @@ class Matrix:
         return mul
 
 
-    def mul_mat(self, mat:'Matrix'):
+    def mul_mat(self, mat:'Matrix') -> 'Matrix':
         try:
             if not isinstance(mat, Matrix):
                 raise TypeError("mat is not Matrix")
@@ -82,7 +93,7 @@ class Matrix:
                     mul.matrix[i][j] += (self.matrix[i][k] * mat.matrix[k][j])
         return mul
     
-    def trace(self):
+    def trace(self) -> int:
         try:
             if self.dim[0] != self.dim[1]:
                 raise ValueError("trace : matrix is not square matrix")
@@ -94,3 +105,10 @@ class Matrix:
         for i in range(self.dim[0]):
             result += self.matrix[i][i]
         return result
+    
+    def transpose(self) -> 'Matrix':
+        tr = Matrix.zeros(self.dim[1], self.dim[0])
+        for row in range(self.dim[0]):
+            for col in range(self.dim[1]):
+                tr.matrix[col][row] = self.matrix[row][col]
+        return tr
