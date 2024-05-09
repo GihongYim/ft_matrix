@@ -144,6 +144,30 @@ class Matrix:
                 for j in range(col, ref.dim[1]):
                     ref.matrix[i][j] -= ref.matrix[row][j] * divisor
         return ref
+    
+    # def cofactor(self, n: int, m: int) -> float:
+    #     try :
+    #         if self.dim[0] != self.dim[1]:
+    #             raise ValueError("cofactor: matrix is not square")
+    #         if self.dim[0] <= 1:
+    #             raise ValueError("cofactor: matrix row column length more than 1")
+    #     except Exception as e:
+    #         print(e)
+    #         exit(1)
+
+    #     cof = Matrix.zeros(self.dim[0] - 1, self.dim[1] - 1)
+    #     row = 0
+    #     n -= 1
+    #     m -= 1
+    #     for i in range(self.dim[0]):
+    #         if i == n: continue
+    #         col = 0
+    #         for j in range(self.dim[1]):
+    #             if j == m: continue
+    #             cof.matrix[row][col] = self.matrix[i][j]
+    #             col += 1
+    #         row += 1
+    #     return cof.determinant()
 
     def determinant(self):
         try :
@@ -152,10 +176,22 @@ class Matrix:
         except Exception as e:
             print(e)
             exit(1)
-        ref = self.row_echelon()
         det = 1.0
-        for i in range(ref.dim[0]):
-            det *= ref.matrix[i][i]
+        upper = Matrix(self.matrix)
+        for i in range(upper.dim[0]):
+            if upper.matrix[i][i] == 0.0:
+                for col in range(i + 1, self.dim[0]):
+                    if upper.matrix[col][i] != 0.0:
+                        break
+                upper.matrix[i], upper.matrix[col] = upper.matrix[col], upper.matrix[i]
+                det *= -1
+            divisor = upper.matrix[i][i]
+            if divisor == 0.0: 
+                return 0.0
+            for row in range(i + 1, upper.dim[0]):
+                coeff = upper.matrix[row][i] / divisor
+                for col in range(i, upper.dim[1]):
+                    upper.matrix[row][col] -= coeff * upper.matrix[i][col]
+        for i in range(upper.dim[0]):
+            det *= upper.matrix[i][i]
         return det
-
-        
