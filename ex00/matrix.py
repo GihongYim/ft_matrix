@@ -35,7 +35,19 @@ class Matrix:
             print(e)
             exit(1)
         return Matrix([[0.0 for _ in range(m)] for _ in range(n)])
-        
+    
+    @staticmethod
+    def identity(n: int) -> 'Matrix':
+        try:
+            if n <= 0:
+                raise ValueError("dim number should be positive integer")
+        except Exception as e:
+            print(e)
+            exit(1)
+        id = Matrix([[0.0 for _ in range(n)] for _ in range(n)])
+        for i in range(n):
+            id[i][i] = 1.0
+        return id
 
     def __str__(self):
         result = ""
@@ -197,4 +209,46 @@ class Matrix:
         return det
     
     def inverse(self):
-        
+        try:
+            if self.dim[0] != self.dim[1]:
+                raise ValueError("dim[0] != dim[1]")
+            if self.determinant() == 0.0:
+                raise ValueError("matrix is singular")
+        except Exception as e:
+            print(e)
+            exit(1)
+        left = Matrix(self.matrix)
+        right = Matrix.identity(self.dim[0])
+
+        for i in range(left.dim[0]):
+            ## if lead element is zero change rows
+            if left.matrix[i][i] == 0.0:
+                lead_zero_row = i
+                for j in range(i + 1, left.dim[0]):
+                    if left.matrix[i][j] != 0.0:
+                        lead_zero_row = j
+                        break
+                if lead_zero_row == i:
+                    raise ValueError("matrix singular")
+                left[i], left[lead_zero_row] = left[lead_zero_row], left[i]
+                right[i], right[lead_zero_row] = right[lead_zero_row], right[i]
+            ## divide row to make row that have lead zero
+            divisor = left.matrix[i][i]
+            for j in range(i, left.dim[1]):
+                left.matrix[i][j] /= divisor
+            for j in range(right.dim[1]):
+                right.matrix[i][j] /= divisor
+            ## delete lead zero below this row
+            for j in range(left.dim[0]):
+                if i == j: continue
+                coeff = left.matrix[j][i]
+                for k in range(i, left.dim[1]):
+                    left.matrix[j][k] -= (coeff * left.matrix[i][k])
+                for k in range(right.dim[1]):
+                    right.matrix[j][k] -= (coeff * right.matrix[i][k])
+            # print("left\n",left)
+            # print("right\n",right)
+        return right
+
+
+
