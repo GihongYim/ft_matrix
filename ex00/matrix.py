@@ -195,3 +195,6 @@ class Matrix:
         for i in range(upper.dim[0]):
             det *= upper.matrix[i][i]
         return det
+    
+    def inverse(self):
+        
