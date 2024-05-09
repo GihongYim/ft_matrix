@@ -145,4 +145,17 @@ class Matrix:
                     ref.matrix[i][j] -= ref.matrix[row][j] * divisor
         return ref
 
-                
+    def determinant(self):
+        try :
+            if self.dim[0] != self.dim[1]:
+                raise ValueError("matrix is not square")
+        except Exception as e:
+            print(e)
+            exit(1)
+        ref = self.row_echelon()
+        det = 1.0
+        for i in range(ref.dim[0]):
+            det *= ref.matrix[i][i]
+        return det
+
+        
