@@ -134,11 +134,15 @@ class Matrix:
             if col == ref.dim[1]:
                 continue
             divisor = ref.matrix[row][col]
-            for i in range(col, ref.dim[1]):
-                ref.matrix[row][i] /= divisor
-            for i in range(row, ref.dim[0]):
-                
-
+            if divisor != 1.0:
+                for i in range(col, ref.dim[1]):
+                    ref.matrix[row][i] /= divisor
+            for i in range(ref.dim[0]):
+                if i == row : continue
+                if ref.matrix[i][col] == 0.0: continue
+                divisor = ref.matrix[i][col]
+                for j in range(col, ref.dim[1]):
+                    ref.matrix[i][j] -= ref.matrix[row][j] * divisor
         return ref
 
                 
