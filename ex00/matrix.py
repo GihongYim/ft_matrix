@@ -246,9 +246,17 @@ class Matrix:
                     left.matrix[j][k] -= (coeff * left.matrix[i][k])
                 for k in range(right.dim[1]):
                     right.matrix[j][k] -= (coeff * right.matrix[i][k])
-            # print("left\n",left)
-            # print("right\n",right)
         return right
-
+    
+    def rank(self) -> int:
+        cnt = 0
+        ref = self.row_echelon()
+        
+        for row in range(ref.dim[0]):
+            for col in range(ref.dim[1]):
+                if ref.matrix[row][col] != 0.0:
+                    cnt += 1
+                    break
+        return cnt
 
 
